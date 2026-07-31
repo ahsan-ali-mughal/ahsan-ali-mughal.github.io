@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ahsan Ali — Senior Software Engineer</title>
+<meta name="description" content="Backend engineer building event-driven payment infrastructure at scale. Java, Spring Boot, Kafka, distributed systems." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B1220;
+    --panel: #121B2E;
+    --panel-2: #16213A;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.14);
+    --text: #E7EBF3;
+    --muted: #8A93AC;
+    --muted-2: #5C6480;
+    --amber: #F2A93B;
+    --amber-dim: rgba(242,169,59,0.15);
+    --teal: #2DD4BF;
+    --teal-dim: rgba(45,212,191,0.18);
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --datamono: 'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--amber-dim);color:var(--amber);}
+
+  /* ---- status bar ---- */
+  .statusbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,18,32,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    font-family:var(--datamono);
+    font-size:11.5px;
+    color:var(--muted);
+    padding:9px 24px;
+    display:flex; gap:22px; align-items:center;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  .statusbar .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--teal);
+    display:inline-block;margin-right:7px;
+    box-shadow:0 0 8px var(--teal);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .statusbar b{color:var(--amber); font-weight:500;}
+  .statusbar span{display:inline-flex; align-items:center;}
+
+  /* ---- layout ---- */
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px;}
+  section{padding:88px 0;}
+  section:first-of-type{padding-top:72px;}
+
+  /* ---- nav label ---- */
+  .label{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--teal);
+    letter-spacing:0.02em;
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .label::before{content:'//';color:var(--muted-2);}
+  .label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  /* ---- hero ---- */
+  .hero h1{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(32px,5vw,50px);
+    letter-spacing:-0.01em;
+    line-height:1.15;
+    margin-bottom:14px;
+  }
+  .hero h1 .accent{color:var(--amber);}
+  .hero .pitch{
+    font-size:18px;
+    color:var(--muted);
+    max-width:560px;
+    margin-bottom:36px;
+  }
+  .hero .pitch b{color:var(--text); font-weight:600;}
+
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:64px;}
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:6px;
+    border:1px solid var(--line-strong);
+    transition:all .15s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn.primary{background:var(--amber); color:#1A1204; border-color:var(--amber); font-weight:600;}
+  .btn.primary:hover{background:#ffbf5c;}
+  .btn:not(.primary):hover{border-color:var(--teal); color:var(--teal);}
+
+  /* ---- pipeline signature element ---- */
+  .pipeline{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:28px 26px 22px;
+    overflow:hidden;
+  }
+  .pipeline .ptitle{
+    font-family:var(--datamono);
+    font-size:11px;
+    color:var(--muted-2);
+    margin-bottom:20px;
+    letter-spacing:0.03em;
+  }
+  .ptrack{
+    position:relative;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 4px;
+  }
+  .ptrack::before{
+    content:'';
+    position:absolute; left:0; right:0; top:50%;
+    height:1px; background:var(--line-strong);
+    transform:translateY(-50%);
+    z-index:0;
+  }
+  .pnode{
+    position:relative; z-index:1;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:7px;
+    padding:12px 14px;
+    font-family:var(--datamono);
+    font-size:11.5px;
+    text-align:center;
+    flex:1;
+    margin:0 4px;
+  }
+  .pnode .k{display:block; color:var(--muted); font-size:9.5px; letter-spacing:0.04em; margin-bottom:5px;}
+  .pnode .v{color:var(--text); font-weight:500;}
+  .pnode.old{border-color:rgba(220,90,90,0.35);}
+  .pnode.old .v{color:#E88B8B; text-decoration:line-through; text-decoration-color:rgba(232,139,139,0.5);}
+  .pnode.new{border-color:var(--amber); box-shadow:0 0 0 1px rgba(242,169,59,0.15), 0 0 18px rgba(242,169,59,0.12);}
+  .pnode.new .v{color:var(--amber);}
+  .pdot{
+    position:absolute; top:50%; width:7px; height:7px; border-radius:50%;
+    background:var(--amber); box-shadow:0 0 10px var(--amber);
+    transform:translateY(-50%);
+    animation:travel 3.2s linear infinite;
+  }
+  @keyframes travel{
+    0%{left:0%; opacity:0;}
+    8%{opacity:1;}
+    92%{opacity:1;}
+    100%{left:100%; opacity:0;}
+  }
+  .presult{
+    margin-top:18px; padding-top:16px; border-top:1px dashed var(--line);
+    font-family:var(--datamono); font-size:12px; color:var(--muted);
+  }
+  .presult b{color:var(--amber); font-weight:500;}
+
+  /* ---- about ---- */
+  .about p{color:var(--muted); font-size:15.5px; max-width:680px; margin-bottom:14px;}
+  .about b{color:var(--text); font-weight:600;}
+  .stackline{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:26px;
+  }
+  .chip{
+    font-family:var(--datamono); font-size:12px; color:var(--muted);
+    border:1px solid var(--line); border-radius:5px; padding:6px 10px;
+  }
+
+  /* ---- experience ---- */
+  .job{
+    border-left:2px solid var(--line);
+    padding:2px 0 34px 26px;
+    position:relative;
+  }
+  .job:last-child{padding-bottom:0;}
+  .job::before{
+    content:'';
+    position:absolute; left:-6px; top:6px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--bg); border:2px solid var(--muted-2);
+  }
+  .job.current::before{border-color:var(--amber); background:var(--amber);}
+  .job-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px;}
+  .job-title{font-family:var(--mono); font-size:16.5px; font-weight:600;}
+  .job-title span{color:var(--muted); font-weight:400;}
+  .job-dates{font-family:var(--datamono); font-size:11.5px; color:var(--muted-2); white-space:nowrap;}
+  .job-context{color:var(--muted-2); font-size:13.5px; margin-bottom:12px; max-width:620px;}
+  .job ul{list-style:none;}
+  .job li{
+    color:var(--muted); font-size:14.5px; margin-bottom:7px; padding-left:16px; position:relative;
+  }
+  .job li::before{content:'—'; position:absolute; left:0; color:var(--muted-2);}
+  .job li b{color:var(--text); font-weight:600;}
+  .tag-owner{
+    font-family:var(--datamono); font-size:10px; color:var(--amber);
+    border:1px solid rgba(242,169,59,0.35); border-radius:4px;
+    padding:2px 7px; margin-left:8px; vertical-align:middle;
+  }
+  .tag-team{
+    font-family:var(--datamono); font-size:10px; color:var(--teal);
+    border:1px solid rgba(45,212,191,0.35); border-radius:4px;
+    padding:2px 7px; margin-left:8px; vertical-align:middle;
+  }
+
+  /* ---- projects ---- */
+  .pgrid{display:flex; flex-direction:column; gap:18px;}
+  .pcard{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:26px 26px 24px;
+  }
+  .pcard-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px;}
+  .pcard-title{font-family:var(--mono); font-size:17px; font-weight:600;}
+  .pcard-role{font-family:var(--datamono); font-size:10.5px; padding:3px 9px; border-radius:4px; white-space:nowrap;}
+  .pcard-role.owner{color:var(--amber); border:1px solid rgba(242,169,59,0.35);}
+  .pcard-role.team{color:var(--teal); border:1px solid rgba(45,212,191,0.35);}
+  .pcard-row{display:grid; grid-template-columns:90px 1fr; gap:4px 14px; margin-bottom:8px; font-size:14px;}
+  .pcard-row .k{font-family:var(--datamono); font-size:11px; color:var(--muted-2); padding-top:2px;}
+  .pcard-row .v{color:var(--muted);}
+  .pcard-row .v b{color:var(--text); font-weight:600;}
+  .pcard-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
+  .pcard-tags span{font-family:var(--datamono); font-size:10.5px; color:var(--muted-2); border:1px solid var(--line); border-radius:4px; padding:3px 8px;}
+
+  /* ---- skills ---- */
+  .skillgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px 40px;}
+  .skillgroup .sk-label{font-family:var(--datamono); font-size:11px; color:var(--muted-2); margin-bottom:8px; letter-spacing:0.03em;}
+  .skillgroup .sk-vals{color:var(--muted); font-size:14px;}
+
+  /* ---- footer ---- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:44px 0 60px;
+  }
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-links{display:flex; gap:20px; font-family:var(--mono); font-size:13px;}
+  .footer-links a:hover{color:var(--amber);}
+  .footer-note{font-family:var(--datamono); font-size:11.5px; color:var(--muted-2);}
+
+  @media (max-width:640px){
+    .ptrack{flex-direction:column; gap:10px;}
+    .ptrack::before{display:none;}
+    .pnode{width:100%; margin:0;}
+    .skillgrid{grid-template-columns:1fr;}
+    .pdot{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .pdot, .statusbar .dot{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <span><span class="dot"></span>STATUS: <b>&nbsp;open to work</b></span>
+    <span>ROLE_TARGET: senior backend / distributed systems</span>
+    <span>LOCATION: Karachi, PK</span>
+    <span>RESPONSE_TIME: &lt; 24h</span>
+  </div>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Ahsan Ali<br><span class="accent">Senior Software Engineer</span></h1>
+      <p class="pitch">I build the backend infrastructure that <b>financial transactions run on</b> — Java, Spring Boot, Kafka, and distributed systems, with 3+ years across ride-hailing, fintech, and government platforms.</p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="mailto:mughalahsanali77@gmail.com">Get in touch</a>
+        <a class="btn" href="https://www.linkedin.com/in/ahsan-ali-mughal/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/ahsan-ali-mughal" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="./Ahsan_Ali_Resume.pdf" target="_blank" rel="noopener">Resume (PDF) ↓</a>
+      </div>
+
+      <div class="pipeline">
+        <div class="ptitle">JEENY-INVOICING · MULTI-DOMAIN EVENT PIPELINE (RIDES · TENANTS · STCPAY · PASSES · SUBSCRIPTIONS · B2B)</div>
+        <div class="ptrack">
+          <div class="pnode"><span class="k">SOURCE</span><span class="v">events → Kafka</span></div>
+          <div class="pnode"><span class="k">ROUTE</span><span class="v">SQS main queue</span></div>
+          <div class="pnode new"><span class="k">GENERATE</span><span class="v">worker queues (XML)</span></div>
+          <div class="pnode"><span class="k">DISPATCH</span><span class="v">ZATCA / JoFotara</span></div>
+          <div class="pdot"></div>
+        </div>
+        <div class="presult">SQS main queue routes by <b>country, business type &amp; reference type</b> · Redis for config caching + dedup · rules driven by Jeeny-Config · replaced a cron job that couldn't complete ~100K daily KSA ride invoices on schedule</div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="label">about</div>
+      <p>Over the past 3+ years across ride-hailing, fintech, and government systems, I've worked as a <b>core contributor on payments and banking teams</b> — and taken direct ownership of key services within them. The pattern that keeps repeating: inherit a slow, fragile, batch-driven system, and turn it into something event-driven, observable, and built to hold up under real production load.</p>
+      <p>At <b>Jeeny</b>, a ride-hailing and delivery platform operating across Saudi Arabia, Jordan, and Pakistan, I'm a team member on the Payments squad and own <b>Jeeny-Invoicing</b> end-to-end. Before that, at a Karachi-based core banking solutions provider, I owned the JS Bank and Meezan Bank integrations within a high-volume financial data extraction system.</p>
+      <div class="stackline">
+        <span class="chip">Java</span><span class="chip">Kotlin</span><span class="chip">Spring Boot</span><span class="chip">Apache Kafka</span><span class="chip">Distributed Systems</span><span class="chip">PostgreSQL / MySQL / Oracle</span><span class="chip">MongoDB</span><span class="chip">Cassandra</span><span class="chip">Redis</span><span class="chip">AWS (S3, SQS, SNS)</span><span class="chip">Docker</span>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="label">experience</div>
+
+      <div class="job current">
+        <div class="job-head">
+          <div class="job-title">Software Engineer <span>— Jeeny</span></div>
+          <div class="job-dates">Jun 2025 — Present</div>
+        </div>
+        <div class="job-context">Ride-hailing &amp; delivery platform, Saudi Arabia · Jordan · Pakistan · ~400 employees · millions of rides/month</div>
+        <ul>
+          <li><b>Payments squad</b> <span class="tag-team">team member</span> — core payment services, gateway integrations (Hyperpay, Checkout, StcPay, Mokafaa), PR reviews for the squad's Java repos</li>
+          <li><b>Jeeny-Invoicing</b> <span class="tag-owner">owner</span> — multi-domain invoicing (rides, tenants, StcPay payouts, passes, subscriptions, B2B) via Kafka → SQS → worker/dispatcher queues, replacing a cron job that couldn't complete ~100K daily KSA ride invoices on schedule</li>
+          <li>Contributing to the platform-wide <b>PHP → Java/Spring Boot</b> replatforming initiative</li>
+          <li>Regional compliance: ZATCA (Saudi Arabia), JoFotara (Jordan)</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title">Software Engineer <span>— Hailogics Inc (Part-time)</span></div>
+          <div class="job-dates">Jul 2024 — Dec 2025</div>
+        </div>
+        <div class="job-context">US-based digital services agency · night shift, US time zone</div>
+        <ul>
+          <li>Led backend architecture for a food-tech ordering platform — 40% API responsiveness improvement</li>
+          <li>Built Spring Boot APIs for a telecom IVR testing platform with a React frontend</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title">Java Developer <span>— Arittek Solutions</span></div>
+          <div class="job-dates">Apr 2024 — Jun 2025</div>
+        </div>
+        <div class="job-context">Karachi-based core banking solutions provider (~40 employees)</div>
+        <ul>
+          <li><b>DMAXOL</b> <span class="tag-owner">owner: JS Bank &amp; Meezan Bank integrations</span> — secure financial data extraction system</li>
+          <li>Cut API response times 30%, reduced statement retrieval from 2 days to minutes</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title">Associate Consultant <span>— Sapphire Consulting Services</span></div>
+          <div class="job-dates">May 2023 — Apr 2024</div>
+        </div>
+        <div class="job-context">Government e-governance consultancy · Sindh Excise &amp; Taxation Dept (5M+ taxpayers)</div>
+        <ul>
+          <li>Spring Boot microservices for vehicle registration (MVR) — Feign Client, Eureka Service Registry</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="label">featured systems</div>
+      <div class="pgrid">
+
+        <div class="pcard">
+          <div class="pcard-head">
+            <div class="pcard-title">Jeeny-Invoicing</div>
+            <div class="pcard-role owner">OWNER</div>
+          </div>
+          <div class="pcard-row"><div class="k">SCOPE</div><div class="v">Multi-domain invoicing: rides, tenant leases, StcPay payouts, driver passes, subscriptions, credit notes, and B2B invoices</div></div>
+          <div class="pcard-row"><div class="k">PROBLEM</div><div class="v">Cron-based batch job unable to complete <b>~100K daily ride invoices</b> in Saudi Arabia on schedule</div></div>
+          <div class="pcard-row"><div class="k">ARCHITECTURE</div><div class="v">Events publish to <b>Kafka</b> → route through an <b>SQS main queue</b> (dispatches by country, business type &amp; reference type) → <b>worker queues</b> generate XML → <b>dispatcher queues</b> submit to ZATCA/JoFotara</div></div>
+          <div class="pcard-row"><div class="k">MY ROLE</div><div class="v">Implemented the PRD-defined architecture end-to-end; own and maintain the system; integrated REST + Excel-upload ingestion for B2B; use Redis for config caching and dedup</div></div>
+          <div class="pcard-row"><div class="k">RESULT</div><div class="v">Config-driven generation/dispatch via Jeeny-Config; part of the broader <b>PHP → Java/Spring Boot</b> replatforming effort</div></div>
+          <div class="pcard-tags"><span>Kafka</span><span>AWS SQS</span><span>Spring Boot</span><span>Redis</span><span>Event-Driven</span><span>REST APIs</span></div>
+        </div>
+
+        <div class="pcard">
+          <div class="pcard-head">
+            <div class="pcard-title">Jeeny-Pay</div>
+            <div class="pcard-role team">TEAM MEMBER</div>
+          </div>
+          <div class="pcard-row"><div class="k">PROBLEM</div><div class="v">Core payments backend needs reliable authorization, capture, refund, and wallet workflows at platform scale</div></div>
+          <div class="pcard-row"><div class="k">MY ROLE</div><div class="v">Contribute to core payment services; integrate third-party providers (Hyperpay, Checkout, StcPay, Mokafaa); review PRs for the squad's Java repos</div></div>
+          <div class="pcard-row"><div class="k">RESULT</div><div class="v">Secure financial operations across Saudi Arabia, Jordan &amp; Pakistan</div></div>
+          <div class="pcard-tags"><span>Spring Boot</span><span>REST APIs</span><span>Payment Gateways</span></div>
+        </div>
+
+        <div class="pcard">
+          <div class="pcard-head">
+            <div class="pcard-title">DMAXOL — Bank Integrations</div>
+            <div class="pcard-role owner">OWNER (JS Bank &amp; Meezan Bank)</div>
+          </div>
+          <div class="pcard-row"><div class="k">PROBLEM</div><div class="v">Slow, limited-window financial data extraction for two major Pakistani banks</div></div>
+          <div class="pcard-row"><div class="k">MY ROLE</div><div class="v">Owned JS Bank &amp; Meezan Bank integrations end-to-end within a team-built extraction system</div></div>
+          <div class="pcard-row"><div class="k">RESULT</div><div class="v">30% faster API response times; statement retrieval cut from 2 days to minutes; 50% less manual reporting effort</div></div>
+          <div class="pcard-tags"><span>Spring Boot</span><span>REST APIs</span><span>Banking Systems</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="label">skills</div>
+      <div class="skillgrid">
+        <div class="skillgroup"><div class="sk-label">ARCHITECTURE &amp; SYSTEMS</div><div class="sk-vals">Event-driven design, Kafka migrations, distributed processing, multi-layer caching (Redis, Caffeine)</div></div>
+        <div class="skillgroup"><div class="sk-label">LANGUAGES</div><div class="sk-vals">Java, Kotlin, JavaScript, TypeScript</div></div>
+        <div class="skillgroup"><div class="sk-label">BACKEND</div><div class="sk-vals">Spring Boot, Hibernate, RESTful APIs, JSP, Servlets</div></div>
+        <div class="skillgroup"><div class="sk-label">DATA &amp; MESSAGING</div><div class="sk-vals">MySQL, PostgreSQL, Oracle, MongoDB, Cassandra, Redis, Kafka, ActiveMQ, JMS, Spark</div></div>
+        <div class="skillgroup"><div class="sk-label">CLOUD &amp; DEVOPS</div><div class="sk-vals">AWS (S3, SQS, SNS), Docker, Jenkins</div></div>
+        <div class="skillgroup"><div class="sk-label">PRACTICES</div><div class="sk-vals">Agile/Scrum, code &amp; PR review, cross-service architecture reviews</div></div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-row">
+        <div class="footer-links">
+          <a href="mailto:mughalahsanali77@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/ahsan-ali-mughal/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/ahsan-ali-mughal" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div class="footer-note">Karachi, Pakistan · +92-336-1182144</div>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
